@@ -31,5 +31,11 @@
 *.out
 *.app
 
-server/bin/*
-server/obj/*
+# Ignore bin and obj folders inside the server/ directory
+/server/bin/
+server/obj/
+server/bin/**
+server/obj/**
+obj/
+bin/
+
