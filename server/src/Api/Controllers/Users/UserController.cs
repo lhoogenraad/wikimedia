@@ -11,7 +11,6 @@ namespace Api.Controllers.Users
 {
 	[Route("api/[controller]")]
 	[ApiController]
-    [Authorize]
 	public class UserController : ControllerBase
 	{
 		private readonly MongoDbContext _dbContext;
