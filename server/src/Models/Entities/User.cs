@@ -25,7 +25,7 @@ namespace Models.Entities
         public bool IsActive { get; set; }
 
 		[BsonElement("passwordHash")]
-		public required string PasswordHash { get; set; } // Ensure this exists!
+		public string? PasswordHash { get; set; } // Ensure this exists!
     }
 }
 

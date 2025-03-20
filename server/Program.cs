@@ -1,9 +1,16 @@
-﻿using Application.Services.Auth;
+﻿using Infrastructure.Database;  // Ensure MongoDbContext is found
+using Microsoft.Extensions.Options;
+using Application.Services.Auth;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Inject mongo DB context
+var mongoDbSettings = builder.Configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>();
+builder.Services.AddSingleton(mongoDbSettings);
+builder.Services.AddSingleton<MongoDbContext>();
 
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IAuthService, AuthService>();
