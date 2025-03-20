@@ -7,7 +7,7 @@ using Infrastructure.Database;
 
 namespace Api.Controllers.Auth
 {
-    [Route("api/auth")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
