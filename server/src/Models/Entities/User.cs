@@ -10,19 +10,22 @@ namespace Models.Entities
         public ObjectId Id { get; set; }
 
         [BsonElement("firstName")] // Specifies the name of the field in MongoDB.
-        public string FirstName { get; set; }
+        public required string FirstName { get; set; }
 
         [BsonElement("lastName")]
-        public string LastName { get; set; }
+        public required string LastName { get; set; }
 
         [BsonElement("email")]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         [BsonElement("createdDate")] // Date when the user was created
         public DateTime CreatedDate { get; set; }
 
         [BsonElement("isActive")] // Whether the user is active or deactivated
         public bool IsActive { get; set; }
+
+		[BsonElement("passwordHash")]
+		public required string PasswordHash { get; set; } // Ensure this exists!
     }
 }
 

@@ -1,15 +1,17 @@
-using Microsoft.AspNetCore.Mvc;
 using Models.Entities;
 using Infrastructure.Database;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Users
 {
 	[Route("api/[controller]")]
 	[ApiController]
+    [Authorize]
 	public class UserController : ControllerBase
 	{
 		private readonly MongoDbContext _dbContext;
