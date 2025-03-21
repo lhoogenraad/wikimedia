@@ -1,9 +1,9 @@
 namespace Infrastructure.Log
 
 {
-    public static class ConsoleLogger: ILogger
+    public class ConsoleLogger: ILogger
     {
-		public static void Log(params object[] args)
+		public void Log(params object[] args)
         {
             Console.WriteLine(string.Join(" ", args));
         }
