@@ -71,6 +71,9 @@ namespace Application.Services.Auth
 
 		public string HashPassword(string password)
 		{
+			if (string.IsNullOrEmpty(password))
+				throw new ArgumentNullException(nameof(password), "Password cannot be null or empty");
+
 			using var hmac = new HMACSHA256();
 			byte[] salt = hmac.Key;  // Generate a unique salt
 			byte[] hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -81,6 +84,9 @@ namespace Application.Services.Auth
 
 		public bool VerifyPassword(string password, string storedHash)
 		{
+			if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(storedHash))
+				throw new ArgumentNullException("Password or hash cannot be null");
+
 			var parts = storedHash.Split('.');
 			if (parts.Length != 2) return false;
 

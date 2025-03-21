@@ -8,7 +8,7 @@ namespace Api.Controllers.Health
 	public class HealthcheckController : ControllerBase
 	{
 		[HttpGet]
-		public async Task<ActionResult<String>> HealthCheck() {
+		public IActionResult HealthCheck() {
 			return Ok("Shagadelic baby");
 		}
 	}

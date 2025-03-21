@@ -14,9 +14,9 @@ namespace Api.Controllers.Auth
     {
         private readonly IAuthService _authService;
         private readonly MongoDbContext _dbContext;
-		private readonly ConsoleLogger _logger;
+		private readonly ILogger _logger;
 
-        public AuthController(IAuthService authService, MongoDbContext dbContext, ConsoleLogger logger)
+        public AuthController(IAuthService authService, MongoDbContext dbContext, ILogger logger)
         {
             _authService = authService;
             _dbContext = dbContext;
@@ -26,7 +26,7 @@ namespace Api.Controllers.Auth
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto loginDto)
         {
-			logger.Log("Attempting user login for email:", loginDto.Email);
+			_logger.Log("Attempting user login for email:", loginDto.Email);
             var user = await _dbContext.GetCollection<User>("Users")
                                        .Find(u => u.Email == loginDto.Email)
                                        .FirstOrDefaultAsync();
@@ -43,7 +43,7 @@ namespace Api.Controllers.Auth
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterDto registerDto)
         {
-			logger.Log("Attempting user signup for email:", loginDto.Email);
+			_logger.Log("Attempting user signup for email:", registerDto.Email);
             var existingUser = await _dbContext.GetCollection<User>("Users")
                                                .Find(u => u.Email == registerDto.Email)
                                                .FirstOrDefaultAsync();
