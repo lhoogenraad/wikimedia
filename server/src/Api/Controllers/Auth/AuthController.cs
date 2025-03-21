@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models.Entities;
 using System.Threading.Tasks;
 using Infrastructure.Database;
+using Infrastructure.Log;
 
 namespace Api.Controllers.Auth
 {
@@ -13,16 +14,19 @@ namespace Api.Controllers.Auth
     {
         private readonly IAuthService _authService;
         private readonly MongoDbContext _dbContext;
+		private readonly ConsoleLogger _logger;
 
-        public AuthController(IAuthService authService, MongoDbContext dbContext)
+        public AuthController(IAuthService authService, MongoDbContext dbContext, ConsoleLogger logger)
         {
             _authService = authService;
             _dbContext = dbContext;
+			_logger = logger;
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto loginDto)
         {
+			logger.Log("Attempting user login for email:", loginDto.Email);
             var user = await _dbContext.GetCollection<User>("Users")
                                        .Find(u => u.Email == loginDto.Email)
                                        .FirstOrDefaultAsync();
@@ -39,6 +43,7 @@ namespace Api.Controllers.Auth
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterDto registerDto)
         {
+			logger.Log("Attempting user signup for email:", loginDto.Email);
             var existingUser = await _dbContext.GetCollection<User>("Users")
                                                .Find(u => u.Email == registerDto.Email)
                                                .FirstOrDefaultAsync();

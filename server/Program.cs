@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Application.Services.Auth;
 using Microsoft.IdentityModel.Tokens;
+using Infrastructure.Log;
 using System.Text;
 
 
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Inject mongo DB context
 var mongoDbSettings = builder.Configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>();
 builder.Services.AddSingleton(mongoDbSettings);
+builder.Services.AddSingleton<IConsoleLogger, ConsoleLogger>();
 builder.Services.AddSingleton<MongoDbContext>();
 
 builder.Services.AddControllers();
