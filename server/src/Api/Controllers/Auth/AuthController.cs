@@ -23,21 +23,16 @@ namespace Api.Controllers.Auth
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto loginDto)
         {
-			Console.WriteLine("------------------------------------------");
-			Console.WriteLine(loginDto);
             var user = await _dbContext.GetCollection<User>("Users")
                                        .Find(u => u.Email == loginDto.Email)
                                        .FirstOrDefaultAsync();
-			Console.WriteLine(user);
 
             if (user == null || !_authService.VerifyPassword(loginDto.Password, user.PasswordHash))
             {
-				Console.WriteLine("Failed auth check");
                 return Unauthorized(new { message = "Invalid credentials" });
             }
 
             var token = _authService.GenerateToken(user);
-			Console.WriteLine("------------------------------------------");
             return Ok(new { token });
         }
 
